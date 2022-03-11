@@ -1,5 +1,14 @@
 Rails.application.routes.draw do
 
+  # these routes are for displaying the login form, logging in a user and logging them out
+  get '/login' => 'sessions#new'
+  post '/login' => 'sessions#create'
+  get '/logout' => 'sessions#destroy'
+
+  # these routes will be for signup
+  get '/signup' => 'users#new'
+  post '/users' => 'users#create'
+
   root to: 'products#index'
 
   get '/about' => 'about#index'
