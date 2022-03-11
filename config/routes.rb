@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  # these routes will be for signup
+  get '/signup' => 'users#new'
+  post '/users' => 'users#create'
+
   root to: 'products#index'
 
   get '/about' => 'about#index'
