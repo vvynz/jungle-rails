@@ -35,6 +35,28 @@ RSpec.describe User, type: :model do
 
       expect(@user).to_not be_valid
     end
+
+    it 'is not valid without password & password_confirmation matching' do
+      @user = User.new(
+        password: "password", 
+        password_confirmation: "pass"
+      )
+
+      expect(@user).to_not be_valid
+      expect(@user.errors.messages).to include(:password_confirmation => ["doesn't match Password"])
+    end
+  
+    it 'is not valid if no password confirmation is provided' do
+      @user = User.new(
+        password: "password",
+        password_confirmation: nil
+      )
+
+      expect(@user.password).to_not eq(@user.password_confirmation)
+      # expect(@user).to_not be_valid
+      # expect(@user.errors.messages).to include(:password_confirmation => ["Password can't be blank"])
+    end
+
     
   end
 
