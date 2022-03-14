@@ -15,17 +15,20 @@ RSpec.describe Product, type: :model do
     end
 
     it 'is not valid without a name' do
-      @product = Product.new(name: nil, price_cents: 50, quantity: 100, category_id: @category.id)
+      @category = Category.create(name: "food")
+      # @product = Product.new(name: nil, price_cents: 50, quantity: 100, category: @category)
+      @product = Product.new(name: nil)
+    
 
-      expect(@product.name).to_not be_valid
-      expect(@product.errors.full_messages).to include("Name can't be blank")
+      expect(@product).to_not be_valid
+      expect(@product.errors[:name].size).to eq(1)
     end
 
     it 'is not valid without a price' do
-      @product = Product.new(name: 'fried chicken', price_cents: nil, quantity: 100, category_id: @category.id)
+      @product = Product.new(name: 'fried chicken', price_cents: nil, quantity: 100)
 
-
-      
+      expect(@product.price_cents).to_not be_present
+      # expect(@product.errors.full_messages).to include("Price can't be blank")
     end
 
     it 'is not valid without a quantity' do
