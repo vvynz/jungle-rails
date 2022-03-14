@@ -6,7 +6,7 @@ RSpec.describe User, type: :model do
   # are required when creating the model so you should also have an example for this
   # Emails must be unique, not case sensitive
   # Email, first name, and last name should also be required
-  # password must have a minimum length
+  # password must have a minimum length (8 char)
 
   describe 'Validations' do
 
@@ -57,6 +57,24 @@ RSpec.describe User, type: :model do
       # expect(@user.errors.messages).to include(:password_confirmation => ["Password can't be blank"])
     end
 
+    it 'is not valid if no email is provided' do
+      @user = User.new(email: nil)
+
+      expect(@user).to_not be_valid
+    end
+
+    it 'is not valid if password is less than 8 characters' do
+      @user = User.new(
+        first_name: "Steve",
+        last_name: "Rogers",
+        email: "steverogers@starkindustries.com",
+        password: "passwo", 
+        password_confirmation: "passwo"
+      )
+
+      expect(@user).to_not be_valid
+      expect(@user.errors.full_messages).to include(:password => "password is too short")
+    end
     
   end
 
