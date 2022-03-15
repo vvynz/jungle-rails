@@ -72,12 +72,18 @@ RSpec.describe User, type: :model do
         password_confirmation: "passwo"
       )
 
-      # expect(@user).to_not be_valid
+      expect(@user).to_not be_valid
       # expect(@user.errors.full_messages).to include(:password => "password is too short")
     end
 
     it 'is valid if password is at least 8 characters long' do
-      @user = User.new(password: "password", password_confirmation: "password")
+      @user = User.new(
+        first_name: "Steve",
+        last_name: "Rogers",
+        email: "steverogers@starkindustries.com",
+        password: "password", 
+        password_confirmation: "password"
+      )
 
       expect(@user).to be_valid
       expect(@user.errors.messages).to be_empty
@@ -110,9 +116,9 @@ RSpec.describe User, type: :model do
       )
 
       @user2.save
-      @user2 = User.authenticate_with_credentials("kimjoon@hybe.com", "password")
+      @user = User.authenticate_with_credentials("kimjoon@hybe.com", "password")
 
-      expect(@user2).to be_valid
+      expect(@user2).to eq(@user)
     end
 
     it 'should log a user in even with extra spaces included, beginning or after the email input' do
@@ -145,6 +151,19 @@ RSpec.describe User, type: :model do
       expect(user_email).to eq(@user2.email)
     end
     
+    it 'should not log a user in if the incorrect password is given' do
+      @user2 = User.new(
+        first_name: "Joon",
+        last_name: "Kim",
+        email: "kimjoon@hybe.com",
+        password: "password",
+        password_confirmation: "password"
+      )
+
+      @user2.save
+      @user = User.authenticate_with_credentials("kimjoon@hybe.com", "pass")
+      expect(@user2).to_not eq(@user)
+    end
   end
 
 end
