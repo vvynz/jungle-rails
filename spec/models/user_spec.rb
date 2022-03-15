@@ -100,6 +100,50 @@ RSpec.describe User, type: :model do
   end
 
   describe '.authenticate_with_credentials' do
+    it 'should log a user in with the valid credentials' do
+      @user2 = User.new(
+        first_name: "Joon",
+        last_name: "Kim",
+        email: "kimjoon@hybe.com",
+        password: "password",
+        password_confirmation: "password"
+      )
+
+      @user2.save
+      @user2 = User.authenticate_with_credentials("kimjoon@hybe.com", "password")
+
+      expect(@user2).to be_valid
+    end
+
+    it 'should log a user in even with extra spaces included, beginning or after the email input' do
+      @user2 = User.new(
+        first_name: "Joon",
+        last_name: "Kim",
+        email: "kimjoon@hybe.com",
+        password: "password",
+        password_confirmation: "password"
+      )
+
+      user_email = @user2.email.strip
+      @user2.save
+      @user2 = User.authenticate_with_credentials(" kimjoon@hybe.com ", "password")
+      expect(user_email).to eq(@user2.email)
+    end
+
+    it 'should log a user in even if the there are lower & uppercase letters in the email' do
+      @user2 = User.new(
+        first_name: "Joon",
+        last_name: "Kim",
+        email: "kimjoon@hybe.com",
+        password: "password",
+        password_confirmation: "password"
+      )
+
+      user_email = @user2.email.downcase
+      @user2.save
+      @user2 = User.authenticate_with_credentials("KimJOOn@hybe.com", "password")
+      expect(user_email).to eq(@user2.email)
+    end
     
   end
 
