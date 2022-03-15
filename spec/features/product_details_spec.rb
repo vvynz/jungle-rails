@@ -16,5 +16,17 @@ RSpec.feature "ProductDetails", type: :feature, js: true do
     end
   end
 
-  
+  scenario "They can see a product's details" do
+    # ACT
+    visit root_path
+    find('a.btn-default', match: :first).click
+
+    # VERIFY
+    expect(page).to have_css 'dt', text: 'Description'
+
+    # DEBUG / VERIFY
+    # puts page.html
+    save_screenshot
+  end
+
 end
