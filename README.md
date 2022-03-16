@@ -5,8 +5,10 @@ A mini e-commerce application built with Rails 4.2 for purposes of teaching Rail
 ## Previews
 
 ![Homepage](https://github.com/vvynz/jungle-rails/blob/master/docs/jungle_homepage.png)
+
 ![Product details](https://github.com/vvynz/jungle-rails/blob/master/docs/jungle_product.png)
-![Shopping cart]
+
+![Shopping cart](https://github.com/vvynz/jungle-rails/blob/master/docs/jungle_cart.png)
 
 ## Additional Steps for Apple M1 Machines
 
